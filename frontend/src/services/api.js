@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL:
-    "http://localhost:5000/api",
+    "https://shortify-backend-4wrf.onrender.com",
 });
 
 API.interceptors.request.use(
