@@ -26,6 +26,9 @@ app.use(
 );
 app.use(express.json());
 
+const PORT =
+  process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(
     `Server Running ${PORT}`
@@ -73,6 +76,5 @@ app.get("/:shortId", async (req, res) => {
   }
 });
 
-const PORT =
-  process.env.PORT || 5000;
+
 
