@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import urlRoutes from "./routes/urlRoutes.js";
+import Url from "./models/Url.js";
 
 import {
   redirectUrl,
@@ -35,10 +36,41 @@ app.use(
   urlRoutes
 );
 
-app.get(
-  "/:shortId",
-  redirectUrl
-);
+app.get("/:shortId", async (req, res) => {
+  try {
+    const { shortId } =
+      req.params;
+
+    const url =
+      await Url.findOne({
+        shortId,
+      });
+
+    if (!url) {
+      return res
+        .status(404)
+        .send(
+          "URL Not Found"
+        );
+    }
+
+    url.clicks += 1;
+
+    await url.save();
+
+    return res.redirect(
+      url.originalUrl
+    );
+  } catch (error) {
+    console.log(error);
+
+    res
+      .status(500)
+      .send(
+        "Server Error"
+      );
+  }
+});
 
 const PORT =
   process.env.PORT || 5000;
