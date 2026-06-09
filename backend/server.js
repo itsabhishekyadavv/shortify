@@ -26,15 +26,16 @@ app.use(
 );
 app.use(express.json());
 
-app.use(
-  "/api/auth",
-  authRoutes
-);
+app.listen(PORT, () => {
+  console.log(
+    `Server Running ${PORT}`
+  );
+});
 
-app.use(
-  "/api/url",
-  urlRoutes
-);
+app.use("/api/auth", authRoutes);
+app.use("/api/url", urlRoutes);
+
+/* Redirect Route MUST be BELOW api routes */
 
 app.get("/:shortId", async (req, res) => {
   try {
@@ -58,7 +59,7 @@ app.get("/:shortId", async (req, res) => {
 
     await url.save();
 
-    return res.redirect(
+    res.redirect(
       url.originalUrl
     );
   } catch (error) {
@@ -75,8 +76,3 @@ app.get("/:shortId", async (req, res) => {
 const PORT =
   process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(
-    `Server Running ${PORT}`
-  );
-});
