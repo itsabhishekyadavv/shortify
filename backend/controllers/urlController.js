@@ -10,7 +10,7 @@ export const shortenUrl =
       const shortId =
         shortid.generate();
 
-      const shortUrl = `${process.env.BASE_URL}/${shortId}`;
+      const shortUrl = `https://shortify-backend-4wrf.onrender.com/${shortId}`;
 
       const url =
         await Url.create({
